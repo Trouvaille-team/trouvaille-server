@@ -1,11 +1,12 @@
 'use strict';
 
 const bcrypt = require('bcrypt');
+const xss = require('xss');
 
 
 
 const usersService = {
-    checkUsers(db, username) {
+  checkUsers(db, username) {
     return db('user')
       .where({ username })
       .first()
@@ -19,7 +20,7 @@ const usersService = {
       .then(([user]) => user);
   },
   validatePassword(password) {
-    const PW_REGEX = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/;
+    const PW_REGEX = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&])[\S]+/;
     if(password.length < 8) {
       return 'password must be greater than 8 characters';
     }
@@ -36,6 +37,13 @@ const usersService = {
       return bcrypt.hash(password, 12);
     }
   },
+  sanitizeUser(user) {
+    return {
+      username: xss(user.username),
+      password: xss(user.password),
+      email: xss(user.email)
+    };
+  }
 //   validateEmail(email) {
 //       const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 //       if(email.length <= 10) {

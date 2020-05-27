@@ -3,7 +3,7 @@
 const express = require('express');
 const path = require('path');
 const usersService = require('./users-service');
-const xss = require('xss');
+
 
 
 const usersRouter = express.Router();
@@ -55,7 +55,7 @@ usersRouter
 
       res.status(201)
         .location(path.posix.join(req.originalUrl, `/${user}`))
-        .json(user);
+        .json(usersService.sanitizeUser(user));
     } catch(error) {
       next(error);
     }
