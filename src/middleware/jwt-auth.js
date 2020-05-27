@@ -1,7 +1,7 @@
 /* eslint-disable strict */
 
 const { jsonWebTokenError } = require('jsonwebtoken');
-const AuthService = require('../auth/auth-service');
+const authService = require('../auth/auth-service');
 
 const requireAuth = async (req, res, next) => {
   const authToken = req.get('Authorization') || '';
@@ -12,11 +12,11 @@ const requireAuth = async (req, res, next) => {
     bearerToken = authToken.slice(7, authToken.length);
   }
   try {
-    const payload = AuthService.verifyJWT(bearerToken);
-    const user = await AuthService.getUserName(req.app.get('db'), payload.sub);
-    if (!user) {
+    const payload = authService.verifyJWT(bearerToken);
+    const user = await authService.getUserName(req.app.get('db'), payload.subject);
+    if (!user) 
       return res.status(401).json({ error: 'Unauthorized request' });
-    }
+    
     req.user = user;
     next();
   } catch (error) {

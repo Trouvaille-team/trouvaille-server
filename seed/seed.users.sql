@@ -1,3 +1,4 @@
-INSERT INTO users(user_name, email, password)
-values
-    ("some_user", "some_email@gmail.com", "$ome-p@ssw0rD");
+INSERT INTO users 
+    (username, email, password)
+VALUES
+    ('some_user', 'some_email@gmail.com', '$ome-p@ssw0rD');
