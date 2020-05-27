@@ -1,15 +1,13 @@
 /* eslint-disable strict */
-
 const express = require('express');
 
-
-const authService = require('./authService');
+const authService = require('./auth-service');
 const { requireAuth } = require('../middleware/jwt-auth');
 
 const authRouter = express.Router();
 const jsonBodyParser = express.json();
 
-authRouter.route('/token')
+authRouter.route('/login')
   .post(jsonBodyParser, async(req, res, next) => {
     const { username, password } = req.body;
     const reqUser = { username, password };

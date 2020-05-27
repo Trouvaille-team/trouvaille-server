@@ -4,7 +4,7 @@ const config = require('../config');
 const JWT = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const AuthService = {
+const authService = {
   getUserName(db, userName) {
     return db('users').where({ userName }).first();
   },
@@ -25,4 +25,4 @@ const AuthService = {
   },
 };
 
-module.exports = AuthService;
+module.exports = authService;
