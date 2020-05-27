@@ -15,6 +15,7 @@ authRouter
 
     for(const [key, value] of Object.entries(reqUser)) 
       if(value === null) {
+        console.log(key, value);
         return res.status(400).json({
           error: `${key} missing in request body`
         });
