@@ -7,14 +7,15 @@ const { requireAuth } = require('../middleware/jwt-auth');
 const authRouter = express.Router();
 const jsonBodyParser = express.json();
 
-authRouter.route('/login')
+authRouter
+  .route('/login')
   .post(jsonBodyParser, async(req, res, next) => {
     const { username, password } = req.body;
     const reqUser = { username, password };
 
     for(const [key, value] of Object.entries(reqUser)) 
       if(value === null) {
-        return res.status(400).send({
+        return res.status(400).json({
           error: `${key} missing in request body`
         });
       }
@@ -42,22 +43,11 @@ authRouter.route('/login')
         user_id: userInDb.id
       };
       res.send({
-        authToken: authService.createJWT(subject, payload)
+        authToken: authService.createJwt(subject, payload)
       });
     } catch(error) {
       next(error);
     }  
-    
-  })
-
-  .put(requireAuth, (req, res) => {
-    const subject = req.username;
-    const payload = {
-      user_id: req.user.id
-    };
-    res.send({
-      authToken: authService.createJWT(subject, payload),
-    });
   });
 
 

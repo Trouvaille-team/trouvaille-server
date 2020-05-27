@@ -13,10 +13,10 @@ const requireAuth = async (req, res, next) => {
   }
   try {
     const payload = authService.verifyJWT(bearerToken);
-    const user = await authService.getUserName(req.app.get('db'), payload.sub);
-    if (!user) {
+    const user = await authService.getUserName(req.app.get('db'), payload.subject);
+    if (!user) 
       return res.status(401).json({ error: 'Unauthorized request' });
-    }
+    
     req.user = user;
     next();
   } catch (error) {
