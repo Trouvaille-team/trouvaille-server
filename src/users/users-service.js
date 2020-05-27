@@ -5,13 +5,13 @@ const bcrypt = require('bcrypt');
 
 
 const usersService = {
-    hasUserWithUserName(db, username) {
+    checkUsers(db, username) {
     return db('user')
       .where({ username })
       .first()
       .then(user => !!user);
   },
-  insertNewUser(db, newUser) {
+  insertUser(db, newUser) {
     return db
       .insert(newUser)
       .into('users')
@@ -34,12 +34,14 @@ const usersService = {
     }
     else {
       return bcrypt.hash(password, 12);
-    };
+    }
   },
-  validateEmail(email) {
-      const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      if(email.length <= 10)
-  }
+//   validateEmail(email) {
+//       const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+//       if(email.length <= 10) {
+//           return 'password must be at least 10'
+//       }
+//   }
 };
 
 module.exports = usersService;

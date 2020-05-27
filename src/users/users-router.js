@@ -3,46 +3,62 @@
 const express = require('express');
 const path = require('path');
 const usersService = require('./users-service');
+const xss = require('xss');
 
 
-const userRouter = express.Router();
+const usersRouter = express.Router();
 const jsonBodyParser = express.json();
 
-userRouter
+usersRouter
   .post('/', jsonBodyParser, async (req, res, next) => {
-    const { password, username, name } = req.body
+    const { password, username, email } = req.body;
 
     for (const field of ['username', 'email', 'password'])
       if (!req.body[field])
         return res.status(400).json({
           error: `${field} missing in request body`
-        })
+        });
 
     try {
-      const passwordError = UserService.validatePassword(password)
+      const passwordError = usersService.validatePassword(password);
 
       if (passwordError)
-        return res.status(400).json({ error: passwordError })
+        return res.status(400).json({ error: passwordError });
 
-      const hasUserWithUserName = await UserService.checkUsers(
+      const hasUserWithUserName = await usersService.checkUsers(
         req.app.get('db'),
         username
-      )
+      );
+
+      //   const emailError = await usersService.validateEmail(email);
+        
+      //   if(emailError)
+      //     return res.status(400).json(emailError);
 
       if (hasUserWithUserName)
-        return res.status(400).json({ error: `existing user already has that username` })
+        return res.status(400).json({ error: 'existing user already has that username' });
 
-      const hashedPassword = await  userService.hashPassword(password)
+      const hashedPassword = await  usersService.hashPassword(password);
 
       const newUser = {
         username,
         password: hashedPassword,
-        name,
-      }
+        email,
+      };
 
-      const hasUserWithEmail = await user
+      //   const hasUserWithEmail = await usersService.validateEmail(email);
 
-      const user = await UserService.insertUser(
+      const user = await usersService.insertUser(
         req.app.get('db'),
         newUser
-      )
+      );
+
+      res.status(201)
+        .location(path.posix.join(req.originalUrl, `/${user}`))
+        .json(user);
+    } catch(error) {
+      next(error);
+    }
+  });   
+
+module.exports = usersRouter;
