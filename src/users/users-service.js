@@ -7,7 +7,7 @@ const xss = require('xss');
 
 const usersService = {
   checkUsers(db, username) {
-    return db('user')
+    return db('users')
       .where({ username })
       .first()
       .then(user => !!user);
@@ -33,9 +33,10 @@ const usersService = {
     if(!PW_REGEX.test(password)) {
       return 'password must contain an uppercase, lowercase, a number, and a special character';
     }
-    else {
-      return bcrypt.hash(password, 12);
-    }
+    return null;
+  },
+  hashPassword(password) {
+    return bcrypt.hash(password, 12)
   },
   sanitizeUser(user) {
     return {

@@ -20,8 +20,7 @@ usersRouter
         });
 
     try {
-      const passwordError = usersService.validatePassword(password);
-
+      const passwordError = await usersService.validatePassword(password);
       if (passwordError)
         return res.status(400).json({ error: passwordError });
 
