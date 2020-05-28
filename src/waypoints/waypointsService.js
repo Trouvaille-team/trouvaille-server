@@ -23,7 +23,6 @@ const waypointsService = {
 
     let res = []
     for (let i = 0; i < arr.length; i++) {
-      console.log(i)
       const element = arr[i];
       let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${element.lat},${element.lng}&radius=1500&type=tourist_attraction&key=${config.API_KEY}`
       try {
