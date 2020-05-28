@@ -21,4 +21,4 @@ interestsRouter.route('/').get(async (req, res, next) => {
   }
 });
 
-module.exports - interestsRouter;
+module.exports = interestsRouter;

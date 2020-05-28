@@ -1,9 +1,1 @@
-POST  http://localhost:8000/api/auth/login
-Content-Type: application/json
-Authorization: Bearer
-
-{
-    "username": "bleek42",
-    "email": "brandon@yahoo.com",
-    "password": "MyCl3verPW"
-}
+GET https://localhost:8000/api/interests
