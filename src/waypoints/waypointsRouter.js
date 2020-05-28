@@ -23,6 +23,7 @@ waypointsRouter.route("/").post(jsonBodyParser, async (req, res, next) => {
 })
 waypointsRouter.route('/nearby').post(jsonBodyParser, async (req, res, next) => {
   let coords = [{ lat: req.body.lat, lng: req.body.lng }]
+  console.log(coords)
   waypointsService.getWaypoints(coords).then((places) => {
     res.send(200, JSON.stringify(places))
   })
