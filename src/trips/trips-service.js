@@ -2,11 +2,10 @@
 
 const tripsService = {
   getUserTrips(db, user_id) {
-    return db
-      .from('trips')
-      .select('*')
-      .join('trips', 'trips.trip_id', '=', 'users.id')
-      .where({ user_id });
+    return db.from('trips').select('*').where(user_id, 'trips.trip_id');
+  },
+  getUserId(db, username) {
+    return db.from('users').select('id').where({ username });
   },
   addUserTrip(db, newTrip) {
     return db

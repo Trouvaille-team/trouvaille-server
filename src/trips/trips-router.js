@@ -7,7 +7,8 @@ const tripsRouter = express.Router();
 
 tripsRouter.route('/').get(async (req, res, next) => {
   try {
-    const usersTrips = await tripsService.getUserTrips(req.app.get('db'));
+    const user = await tripsService.getUserId(req.app.get('db'), 'bleek42');
+    const usersTrips = await tripsService.getUserTrips(req.app.get('db'), user);
 
     if (!usersTrips) {
       res.status(400).json({
