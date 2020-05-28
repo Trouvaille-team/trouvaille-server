@@ -51,15 +51,19 @@ authRouter
     }
   })
 
-  .put(requireAuth, (req, res) => {
-    const subject = req.user.username;
-    const payload = {
-      user_id: req.user.name,
-    };
+  .put(requireAuth, (req, res, next) => {
+    try {
+      const subject = req.user.username;
+      const payload = {
+        user_id: req.user.name,
+      };
 
-    res.send({
-      authToken: authService.createJwt(subject, payload),
-    });
+      res.send({
+        authToken: authService.createJwt(subject, payload),
+      });
+    } catch (error) {
+      next(error);
+    }
   });
 
 module.exports = authRouter;
