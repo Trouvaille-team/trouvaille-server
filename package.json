@@ -24,7 +24,9 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.1",
     "morgan": "^1.10.0",
+    "node-fetch": "^2.6.0",
     "pg": "^8.2.1",
+    "polyline": "^0.2.0",
     "postgrator": "^4.0.0",
     "xss": "^1.0.6"
   },
