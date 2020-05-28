@@ -35,6 +35,7 @@ const waypointsService = {
         console.log(error);
       }
     }
+    console.log(res)
     return res
   }
 }
