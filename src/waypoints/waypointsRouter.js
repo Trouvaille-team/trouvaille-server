@@ -4,15 +4,20 @@ const express = require("express");
 const jsonBodyParser = express.json();
 const waypointsService = require("./waypointsService")
 const config = require("../config.js")
+const waypointsRouter = express.Router();
 
 
-const url = `https://maps.googleapis.com/maps/api/directions/json?origin=New+York&destination=Los+Angeles&key=${config.API_KEY}`;
+let origin = "New+York"
+let dest = "Los+Angeles"
+const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${dest}&key=${config.API_KEY}`;
 
-
-function test() {
-  waypointsService.getPoints(url).then((res) => {
-    console.log(res)
-
+waypointsRouter.route("/").get(jsonBodyParser, async (req, res, next) => {
+  waypointsService.getPoints(url).then((data) => {
+    waypointsService.getWaypoints(data).then((places) => {
+      res.send(200, places)
+    })
   })
-}
-test()
+
+})
+module.exports = waypointsRouter
+

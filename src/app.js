@@ -8,7 +8,7 @@ const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const errorHandler = require('./middleware/error-handler');
 const authRouter = require('./auth/auth-router');
-
+const waypointsRouter = require("./waypoints/waypointsRouter")
 const app = express();
 
 app.use(morgan(NODE_ENV === 'production' ? 'tiny' : 'common', {
@@ -17,7 +17,7 @@ app.use(morgan(NODE_ENV === 'production' ? 'tiny' : 'common', {
 app.use(helmet());
 app.use(cors());
 
-
+app.use('/api/waypoints', waypointsRouter)
 app.use('/api/auth', authRouter);
 
 app.use(errorHandler);
