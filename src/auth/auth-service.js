@@ -5,24 +5,24 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const authService = {
-  getUserName(db, userName) {
-    return db('users').where({ userName }).first();
+  getUserName(db, username) {
+    return db('users').where({ username }).first();
   },
   comparePassword(password, hash) {
     return bcrypt.compare(password, hash);
   },
-  createJWT(subject, payload) {
+  createJwt(subject, payload) {
     return jwt.sign(payload, config.JWT_SECRET, {
       subject,
       expiresIn: config.JWT_EXPIRY,
       algorithm: 'HS256',
     });
   },
-  verifyJWT(token) {
+  verifyJwt(token) {
     return jwt.verify(token, config.JWT_SECRET, {
       algorithms: ['HS256'],
     });
-  }
+  },
 };
 
 module.exports = authService;

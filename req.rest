@@ -1,7 +1,6 @@
 POST  http://localhost:8000/api/auth/login
 Content-Type: application/json
-Authorization: Bearer c4c35a9d6aaf6b10b90c66bdd96f769c76246170d64b53209c0b765640fb3bcd4529db7421827d4
-12f968c2b90524084cb3a6fece1a8f288e93e59071e2fa5f7'
+Authorization: Bearer
 
 {
     "username": "bleek42",
