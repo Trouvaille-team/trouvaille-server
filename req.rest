@@ -1,1 +1,9 @@
-GET http://localhost:8000/api/trips
+POST http://localhost:8000/api/trips
+content-type: application/json
+
+{
+    "origin": "Clayton, NC",
+    "destination": "Denver, CO",
+    "waypoints": "some places",
+    "user_id": 1
+}

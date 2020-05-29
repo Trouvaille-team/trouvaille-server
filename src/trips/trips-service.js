@@ -1,19 +1,22 @@
 'use strict';
 
 const tripsService = {
-  getUserTrips(db, trip_id) {
-    return db
-      .from('trips')
-      .select('trips.*')
-      .leftJoin('users', 'users.id', '=', 'trips.trip_id')
-      .where('trip_id', trip_id);
+  getUserTrips(db, userId) {
+    return (
+      db
+        .from('trips')
+        .select('*')
+        //.leftJoin('trips.user_id', '=', 'users.id')
+        .where('user_id', userId)
+        .returning('trips.origin')
+    );
   },
   getUserId(db, username) {
     return db.from('users').select('id').where({ username });
   },
-  addUserTrip(db, newTrip) {
+  addUserTrip(db, userPost) {
     return db
-      .insert(newTrip)
+      .insert(userPost)
       .into('trips')
       .returning('*')
       .then((trips) => {

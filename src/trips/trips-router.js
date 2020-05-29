@@ -10,12 +10,14 @@ tripsRouter
   .route('/')
   .get(async (req, res, next) => {
     try {
-      const user = await tripsService.getUserId(req.app.get('db'), 'bleek42');
+      const id = await tripsService.getUserId(req.app.get('db'), 'bleek42');
+      console.log(id);
       const usersTrips = await tripsService.getUserTrips(
         req.app.get('db'),
-        user
+        //id[0].id
+        1
       );
-
+      console.log(usersTrips);
       if (!usersTrips) {
         res.status(400).json({
           error: 'cannot find any existing trips',
@@ -29,9 +31,12 @@ tripsRouter
   })
   .post(jsonBodyParser, async (req, res, next) => {
     try {
+      const { origin, destination, waypoints, user_id } = req.body;
+      const userPost = { origin, destination, waypoints, user_id };
+      console.info(origin, destination, waypoints, user_id);
       const newTrip = await tripsService.addUserTrip(
         req.app.get('db'),
-        'bleek42'
+        userPost
       );
 
       if (!newTrip) {
