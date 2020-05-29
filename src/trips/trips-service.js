@@ -1,8 +1,12 @@
 'use strict';
 
 const tripsService = {
-  getUserTrips(db, user_id) {
-    return db.from('trips').select('*').where(user_id, 'trips.trip_id');
+  getUserTrips(db, trip_id) {
+    return db
+      .from('trips')
+      .select('trips.*')
+      .leftJoin('users', 'users.id', '=', 'trips.trip_id')
+      .where('trip_id', trip_id);
   },
   getUserId(db, username) {
     return db.from('users').select('id').where({ username });
