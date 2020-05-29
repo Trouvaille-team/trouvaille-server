@@ -17,12 +17,18 @@ waypointsRouter.route("/").post(jsonBodyParser, async (req, res, next) => {
   const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${dest}&key=${config.API_KEY}`;
   waypointsService.getPoints(url).then((data) => {
     waypointsService.getWaypoints(data).then((places) => {
+
+      const filteredList = Array.from(new Set(places.points.map(a => a.id)))
+        .map(id => {
+          return places.points.find(a => a.id === id)
+        })
+      places.points = filteredList
       res.send(200, JSON.stringify(places))
     })
   })
 })
 waypointsRouter.route('/nearby').post(jsonBodyParser, async (req, res, next) => {
-  let coords = [{ lat: req.body.lat, lng: req.body.lng }]
+  let coords = { points: [{ lat: req.body.lat, lng: req.body.lng }] }
   waypointsService.getWaypoints(coords).then((places) => {
     res.send(200, JSON.stringify(places))
   })

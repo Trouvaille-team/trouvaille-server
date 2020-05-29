@@ -7,7 +7,6 @@ const config = require("../config.js")
 
 const waypointsService = {
   async getPoints(url) {
-    console.log("***************", url)
     let points = []
     let endCoords = {}
     try {
@@ -26,9 +25,9 @@ const waypointsService = {
     endCoords = obj.endCoords
     let points = []
     for (let i = 0; i < obj.points.length; i++) {
+      console.log(i)
       const element = obj.points[i];
       let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${element.lat},${element.lng}&radius=6000&type=tourist_attraction&key=${config.API_KEY}`
-      console.log(url)
       try {
         const response = await fetch(url);
         const json = await response.json();
@@ -39,7 +38,6 @@ const waypointsService = {
         console.log(error);
       }
     }
-    console.log(points)
     return { points, endCoords }
   }
 }
