@@ -1,3 +1,1 @@
-POST  http://localhost:8000/login
-Content-Type: application/json
-Authorization: 
+GET https://localhost:8000/api/interests
