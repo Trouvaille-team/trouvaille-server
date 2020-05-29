@@ -29,7 +29,6 @@ const waypointsService = {
       console.log(i)
       const element = obj.points[i];
       let url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${obj.query.join("%20")}&type=tourist_attraction&location=${element.lat},${element.lng}&radius=5000&key=${config.API_KEY}`
-      console.log(url)
       try {
         const response = await fetch(url);
         const json = await response.json();

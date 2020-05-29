@@ -14,8 +14,10 @@ let dest = "Los+Angeles"
 waypointsRouter.route("/").post(jsonBodyParser, async (req, res, next) => {
   let origin = req.body.origin;
   let dest = req.body.dest
+  let query = req.body.query
   const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${dest}&key=${config.API_KEY}`;
   waypointsService.getPoints(url).then((data) => {
+    data = { ...data, query }
     waypointsService.getWaypoints(data).then((places) => {
 
       const filteredList = Array.from(new Set(places.points.map(a => a.id)))
