@@ -23,16 +23,19 @@ const waypointsService = {
   },
   async getWaypoints(obj) {
     endCoords = obj.endCoords
+
     let points = []
     for (let i = 0; i < obj.points.length; i++) {
       console.log(i)
       const element = obj.points[i];
-      let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${element.lat},${element.lng}&radius=6000&type=tourist_attraction&key=${config.API_KEY}`
+      let url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${obj.query.join("%20")}&type=tourist_attraction&location=${element.lat},${element.lng}&radius=5000&key=${config.API_KEY}`
       try {
         const response = await fetch(url);
         const json = await response.json();
         json.results.map((place) => {
-          points.push({ name: place.name, id: place.place_id, coords: place.geometry.location })
+          points.push({
+            name: place.name, id: place.place_id, coords: place.geometry.location, photoInfo: place.photos
+          })
         })
       } catch (error) {
         console.log(error);
