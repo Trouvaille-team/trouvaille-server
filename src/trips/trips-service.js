@@ -11,9 +11,6 @@ const tripsService = {
         .returning('trips.origin')
     );
   },
-  getUserId(db, username) {
-    return db.from('users').select('id').where({ username });
-  },
   addUserTrip(db, userPost) {
     return db
       .insert(userPost)
