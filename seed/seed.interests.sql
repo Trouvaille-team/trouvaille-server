@@ -5,7 +5,7 @@ INSERT INTO interests (keywords, name)
     ('sand ocean shore swimming', 'beaches'),
     ('craft distilleries brewhouse microbrew alcohol', 'breweries/wineries'),
     ('antiques relics gallery art artifacts', 'museums'),
-    ('curiosities', 'novelty'),
+    ('curiosities oddity weird crazy oddball interesting', 'novelty'),
     ('war cemetery army navy history marines', 'military/memorials/battlefields'),
     ('ruins statues national', 'monuments/landmarks'),
     ('playgrounds lakes fields', 'parks'),
