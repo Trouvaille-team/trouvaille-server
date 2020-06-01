@@ -1,14 +1,14 @@
 INSERT INTO interests (keywords, name)
     VALUES
-    ('campsite campgrounds outdoors', 'camping'),
-    ('trail', 'hiking'),
-    ('sand ocean ', 'beaches'),
-    ('', 'breweries/wineries'),
-    ('gallery art', 'museums'),
-    ('', 'novelty'),
-    ('army navy marines', 'military/memorials/battlefields'),
-    ('statues ', 'monuments/landmarks'),
-    ('playgrounds fields', 'parks'),
-    ('mammals reptiles', 'zoos'),
-    ('fair thrill', 'amusement park'),
-    ('ghost spooky scary', 'haunted');
+    ('campsite forest nature campgrounds outdoors', 'camping'),
+    ('trails walking nature mountains', 'hiking'),
+    ('sand ocean shore swimming', 'beaches'),
+    ('craft distilleries brewhouse microbrew alcohol', 'breweries/wineries'),
+    ('antiques relics gallery art artifacts', 'museums'),
+    ('curiosities', 'novelty'),
+    ('war cemetery army navy history marines', 'military/memorials/battlefields'),
+    ('ruins statues national', 'monuments/landmarks'),
+    ('playgrounds lakes fields', 'parks'),
+    ('mammals ecology animals reptiles', 'zoos'),
+    ('fair recreation rides fun family kids children', 'amusement park'),
+    ('ghost spooky scary cursed abandoned', 'haunted');
