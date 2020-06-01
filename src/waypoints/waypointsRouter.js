@@ -32,7 +32,7 @@ waypointsRouter.route("/").post(jsonBodyParser, async (req, res, next) => {
 waypointsRouter.route('/nearby').post(jsonBodyParser, async (req, res, next) => {
   let coords = { points: [{ lat: req.body.lat, lng: req.body.lng }], query: req.body.query }
   waypointsService.getWaypoints(coords).then((places) => {
-    if (places) {
+    if (places.points.length > 0) {
       res.send(200, JSON.stringify(places))
     } else {
       res.send(200, json.stringify({ points: "no data found sorry buddy" }))
