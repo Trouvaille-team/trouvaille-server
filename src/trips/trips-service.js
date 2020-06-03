@@ -2,7 +2,7 @@
 
 const tripsService = {
   getUserTrips(db, userId) {
-    return (
+    let res = (
       db
         .from('trips')
         .select('*')
@@ -10,16 +10,31 @@ const tripsService = {
         .where('user_id', userId)
         .returning('trips.origin')
     );
+    return deserialize(res)
   },
   addUserTrip(db, userPost) {
     return db
-      .insert(userPost)
+      .insert(serialize(userPost))
       .into('trips')
       .returning('*')
       .then((trips) => {
-        return trips[0];
+        return deserialize(trips[0]);
       });
   },
 };
+
+function serialize(trip) {
+  return ({
+    ...trip, origin: JSON.stringify(trip.origin), destination: JSON.stringify(trip.destination), waypoints: JSON.stringify(trip.waypoints)
+  }
+  )
+}
+
+function deserialize(trip) {
+  return ({
+    ...trip, origin: JSON.parse(trip.origin), destination: JSON.parse(trip.destination), waypoints: JSON.parse(trip.waypoints)
+  }
+  )
+}
 
 module.exports = tripsService;
