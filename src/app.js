@@ -15,14 +15,16 @@ const waypointsRouter = require('./waypoints/waypointsRouter')
 const tripsRouter = require('./trips/trips-router');
 
 const app = express();
-
+const corsOptions = {
+  origin: 'https://trouvaille.now.sh'
+}
 app.use(
   morgan(NODE_ENV === 'production' ? 'tiny' : 'common', {
     skip: () => NODE_ENV === 'test',
   })
 );
 app.use(helmet());
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use('/api/waypoints', waypointsRouter)
 app.use('/api/auth', authRouter);
