@@ -19,7 +19,6 @@ waypointsRouter.route("/").post(jsonBodyParser, async (req, res, next) => {
     res.send(404, "missing required field")
   }
   const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${dest}&key=${config.API_KEY}`;
-  console.log(url)
   waypointsService.getPoints(url, origin).then((data) => {
     if (!data || data.length < 1) {
       res.send(400, "no route found")

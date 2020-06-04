@@ -14,13 +14,11 @@ const waypointsService = {
       const json = await response.json();
       origin = origin.split(",")
       json.routes[0].legs[0].steps.map((step) => {
-        console.log(Math.abs(step.end_location.lat - parseFloat(origin[0])))
         if (Math.abs(step.end_location.lat - parseFloat(origin[0])) > 0.03 && Math.abs(step.end_location.lng - parseFloat(origin[1])) > 0.03) {
           points.push(step.end_location);
         }
         endCoords = json.routes[0].legs[0].end_location
       });
-      console.log(points)
       return { points, endCoords }
     } catch (error) {
       console.log(error);
@@ -34,7 +32,6 @@ const waypointsService = {
       console.log(i)
       const element = obj.points[i];
       let url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${obj.query.join("%20")}&type=tourist_attraction&location=${element.lat},${element.lng}&radius=5000&key=${config.API_KEY}`
-      console.log(url)
       try {
         const response = await fetch(url);
         const json = await response.json();
@@ -47,7 +44,6 @@ const waypointsService = {
         console.log(error);
       }
     }
-    console.log(points)
     return { points, endCoords }
   }
 }

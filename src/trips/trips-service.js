@@ -6,10 +6,9 @@ const tripsService = {
       db
         .from('trips')
         .select('*')
-        //.leftJoin('trips.user_id', '=', 'users.id')
         .where('user_id', userId)
-        .returning('*')
     ).then((res) => {
+      console.log(deserialize(res))
       return deserialize(res)
     })
   },
@@ -19,8 +18,9 @@ const tripsService = {
       .into('trips')
       .returning('*')
       .then((trips) => {
-        return deserialize(trips[0]);
+        return "posted"
       }).then((data) => {
+        console.log("data:", data)
         return data
       })
   },
@@ -42,8 +42,8 @@ function deserialize(trip) {
         origin: JSON.parse(element.origin), destination: JSON.parse(element.destination), waypoints: JSON.parse(element.waypoints), trip_id: element.trip_id, user_id: element.user_id
       })
     }
-    return arr
   }
+  return arr
 }
 
 module.exports = tripsService;

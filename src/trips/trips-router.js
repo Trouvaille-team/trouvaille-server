@@ -28,15 +28,14 @@ tripsRouter.route('/:user_id').get(async (req, res, next) => {
 tripsRouter
   .route('/')
   .post(jsonBodyParser, async (req, res, next) => {
+    console.log(req.body)
     try {
       const { origin, destination, waypoints, user_id } = req.body;
       const userPost = { origin, destination, waypoints, user_id };
-      console.log(origin, destination, waypoints, user_id)
       const newTrip = await tripsService.addUserTrip(
         req.app.get('db'),
         userPost
       );
-
       if (!newTrip) {
         res.status(400).json({
           error: 'cannot add new trip',
