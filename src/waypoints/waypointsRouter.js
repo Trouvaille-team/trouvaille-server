@@ -15,12 +15,17 @@ waypointsRouter.route("/").post(jsonBodyParser, async (req, res, next) => {
   let origin = req.body.origin;
   let dest = req.body.dest
   let query = req.body.query
+  if (!origin || !dest || !query) {
+    res.send(404, "missing required field")
+  }
   const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${dest}&key=${config.API_KEY}`;
-  waypointsService.getPoints(url).then((data) => {
+  console.log(url)
+  waypointsService.getPoints(url, origin).then((data) => {
+    if (!data || data.length < 1) {
+      res.send(400, "no route found")
+    }
     data = { ...data, query }
-    console.log(query)
     waypointsService.getWaypoints(data).then((places) => {
-
       const filteredList = Array.from(new Set(places.points.map(a => a.id)))
         .map(id => {
           return places.points.find(a => a.id === id)
@@ -31,8 +36,10 @@ waypointsRouter.route("/").post(jsonBodyParser, async (req, res, next) => {
   })
 })
 waypointsRouter.route('/nearby').post(jsonBodyParser, async (req, res, next) => {
+  if (!req.body.lat || !req.body.lng || !req.body.query) {
+    res.send(400, "missing required fields")
+  }
   let coords = { points: [{ lat: req.body.lat, lng: req.body.lng }], query: req.body.query }
-  console.log(req.body.query)
   waypointsService.getWaypoints(coords).then((places) => {
     if (places.points.length > 0) {
       res.send(200, JSON.stringify(places))
