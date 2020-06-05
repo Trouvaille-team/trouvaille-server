@@ -39,7 +39,7 @@ function deserialize(trip) {
     const element = trip[i];
     {
       arr.push({
-        origin: JSON.parse(element.origin), destination: JSON.parse(element.destination), waypoints: JSON.parse(element.waypoints), trip_id: element.trip_id, user_id: element.user_id
+        origin: JSON.parse(element.origin), destination: JSON.parse(element.destination), waypoints: JSON.parse(element.waypoints), trip_id: element.trip_id, user_id: element.user_id, destination_name: element.destination_name
       })
     }
   }

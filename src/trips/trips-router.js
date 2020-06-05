@@ -30,8 +30,8 @@ tripsRouter
   .post(jsonBodyParser, async (req, res, next) => {
     console.log(req.body)
     try {
-      const { origin, destination, waypoints, user_id } = req.body;
-      const userPost = { origin, destination, waypoints, user_id };
+      const { origin, destination, waypoints, user_id, destination_name } = req.body;
+      const userPost = { origin, destination, waypoints, user_id, destination_name };
       const newTrip = await tripsService.addUserTrip(
         req.app.get('db'),
         userPost
