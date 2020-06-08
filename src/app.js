@@ -26,7 +26,6 @@ app.use(cors());
 app.use('/api/waypoints', waypointsRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/interests', interestsRouter);
 app.use('/api/trips', tripsRouter);
 
 app.use(errorHandler);
