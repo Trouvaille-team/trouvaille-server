@@ -11,7 +11,7 @@ const errorHandler = require('./middleware/error-handler');
 const authRouter = require('./auth/auth-router');
 const usersRouter = require('./users/users-router');
 const interestsRouter = require('./interests/interests-router');
-const waypointsRouter = require('./waypoints/waypointsRouter')
+const waypointsRouter = require('./waypoints/waypointsRouter');
 const tripsRouter = require('./trips/trips-router');
 
 const app = express();
@@ -24,7 +24,7 @@ app.use(
 app.use(helmet());
 app.use(cors());
 
-app.use('/api/waypoints', waypointsRouter)
+app.use('/api/waypoints', waypointsRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/interests', interestsRouter);
