@@ -5,6 +5,7 @@ const jsonBodyParser = express.json();
 const waypointsService = require("./waypointsService")
 const config = require("../config.js")
 const waypointsRouter = express.Router();
+const fetch = require("node-fetch");
 
 
 let origin = "New+York"
@@ -40,12 +41,27 @@ waypointsRouter.route('/nearby').post(jsonBodyParser, async (req, res, next) => 
   }
   let coords = { points: [{ lat: req.body.lat, lng: req.body.lng }], query: req.body.query }
   waypointsService.getWaypoints(coords).then((places) => {
+
     if (places.points.length > 0) {
       res.send(200, JSON.stringify(places))
     } else {
       res.send(200, JSON.stringify({ points: ["no data found sorry buddy"] }))
     }
   })
+})
+
+waypointsRouter.route('/photo').post(jsonBodyParser, async (req, res, next) => {
+  console.log(req.body.photo_reference)
+  let url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${req.body.photo_reference}&key=${config.API_KEY}`
+
+  try {
+    const response = await fetch(url);
+    res.send(200, JSON.stringify(response.url))
+  } catch (error) {
+    console.log(error);
+  }
+
+
 })
 module.exports = waypointsRouter
 
