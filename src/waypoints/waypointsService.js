@@ -2,7 +2,6 @@
 require("dotenv").config()
 const express = require("express");
 const fetch = require("node-fetch");
-var polyline = require("polyline");
 const config = require("../config.js")
 
 const waypointsService = {
@@ -44,6 +43,7 @@ const waypointsService = {
         console.log(error);
       }
     }
+    console.log(points)
     return { points, endCoords }
   }
 }
