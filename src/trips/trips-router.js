@@ -25,7 +25,6 @@ tripsRouter.route('/:user_id').get(async (req, res, next) => {
 });
 
 tripsRouter.route('/').post(jsonBodyParser, async (req, res, next) => {
-  console.log(req.body);
   try {
     const {
       origin,
