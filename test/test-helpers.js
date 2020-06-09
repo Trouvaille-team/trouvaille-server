@@ -13,7 +13,7 @@ class testUser {
 }
 
 const createAuth = (user, secret = process.env.JWT_SECRET) => {
-  const token = jwt.sign({ username: testUser.id }, secret, {
+  const token = jwt.sign({ id: user.id }, secret, {
     subject: testUser.username,
     algorithm: 'HS256',
   });
@@ -21,7 +21,7 @@ const createAuth = (user, secret = process.env.JWT_SECRET) => {
 };
 
 const insertMockUser = (db, user) => {
-  const mockUser = new testUser();
+  const mockUser = new testUser(user);
   mockUser.password = bcrypt.hashSync('cl3v3rP@sswerd', 10);
   return db.into('users').insert(mockUser);
 };
