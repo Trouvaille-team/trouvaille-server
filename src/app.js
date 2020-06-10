@@ -10,7 +10,6 @@ const errorHandler = require('./middleware/error-handler');
 
 const authRouter = require('./auth/auth-router');
 const usersRouter = require('./users/users-router');
-const interestsRouter = require('./interests/interests-router');
 const waypointsRouter = require('./waypoints/waypointsRouter');
 const tripsRouter = require('./trips/trips-router');
 

@@ -1,9 +1,9 @@
 'use strict';
 
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-class mockUser {
+class MockUser {
   constructor(id, username, email, password) {
     this.id = id;
     this.username = username;
@@ -22,12 +22,12 @@ const createAuth = (mockUser, secret = process.env.JWT_SECRET) => {
 
 const insertMockUser = (db, mockUser) => {
   //const mockUser = new testUser(user);
-  mockUser.password = bcrypt.hashSync('cl3v3rP@sswerd', 10);
+  //mockUser.password = bcrypt.hashSync('cl3v3rP@sswerd', 10);
   return db.into('users').insert(mockUser);
 };
 
 module.exports = {
-  mockUser,
+  MockUser,
   createAuth,
   insertMockUser,
 };
