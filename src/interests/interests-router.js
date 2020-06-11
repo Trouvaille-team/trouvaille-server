@@ -20,5 +20,3 @@ interestsRouter.route('/').get(async (req, res, next) => {
     next(error);
   }
 });
-
-module.exports = interestsRouter;
