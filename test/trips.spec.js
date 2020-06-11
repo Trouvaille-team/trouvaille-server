@@ -5,8 +5,9 @@ const knex = require('knex');
 const supertest = require('supertest');
 const app = require('../src/app');
 const { TEST_DATABASE_URL } = require('../src/config');
+const { insertMockUser, insertTrip, testTrip, cleanTrip, cleanUsers } = require('./test-helpers');
 
-describe('trips endpoint', () => {
+describe.only('trips endpoint', function () {
   let db;
 
   before('make knex instance', () => {
@@ -16,21 +17,26 @@ describe('trips endpoint', () => {
     });
     app.set('db', db);
   });
-
   after('disconnect from db', () => db.destroy());
 
-  it('should respond 200 with users trips', () => {
-    return supertest(app)
-      .get('/trips/1')
-      .expect(200)
-      .expect((res) => {
-        expect(res.body).to.exist;
-      });
-  });
+  after('clear database', () => {
+    cleanTrip(db)
+    cleanUsers(db)
+  })
+  describe("some bullshit", () => {
+    beforeEach('insert shit', () => {
+      insertMockUser(db);
+      insertTrip(db)
+    })
 
-  it.only('should respond 400 if no tripss exist', () => {
-    return supertest(app)
-      .get('/api/trips/1')
-      .expect(400, { error: 'could not find any trips' });
-  });
+    it('should respond 200 with users trips', () => {
+      return supertest(app)
+        .get('/api/trips/1')
+        .expect(200)
+        .expect((res) => {
+          expect(res.body).to.exist;
+        });
+    })
+  })
+
 });

@@ -9,15 +9,16 @@ const jsonBodyParser = express.json();
 tripsRouter.route('/:user_id').get(async (req, res, next) => {
   try {
     const id = req.params.user_id;
+    console.log("id is", id)
     return await tripsService
       .getUserTrips(req.app.get('db'), id)
       .then((data) => {
-        if (!data) {
+        if (data.length === 0) {
           res.status(400).json({
             error: 'cannot find any existing trips',
           });
         }
-        res.send(200, data);
+        else { res.send(200, data) };
       });
   } catch (error) {
     next(error);
