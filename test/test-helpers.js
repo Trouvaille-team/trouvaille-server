@@ -4,8 +4,7 @@
 const jwt = require('jsonwebtoken');
 
 class MockUser {
-  constructor(id, username, email, password) {
-    this.id = id;
+  constructor(username, email, password) {
     this.username = username;
     this.email = email;
     this.password = password;
@@ -26,8 +25,22 @@ const insertMockUser = (db, mockUser) => {
   return db.into('users').insert(mockUser);
 };
 
+const insertTrip = (db, newTrip) => {
+  return db.into('trips').insert(newTrip);
+};
+
+const testTrip = [
+  'someOrigin',
+  'someDestination',
+  'someWaypoints',
+  'someDestName',
+  '1',
+];
+
 module.exports = {
   MockUser,
   createAuth,
   insertMockUser,
+  insertTrip,
+  testTrip,
 };
