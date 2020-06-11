@@ -1,6 +1,8 @@
 'use strict';
 
 const knex = require('knex');
+const supertest = require('supertest');
+const { expect } = require('chai');
 const jwt = require('jsonwebtoken');
 
 const app = require('../src/app');
@@ -29,6 +31,21 @@ describe('auth endpoints', () => {
     johnDoe.password = 'sumCL3v3rP@ssword';
     beforeEach('insert mock user', () => {
       insertMockUser(db, johnDoe);
+    });
+
+    context('given an existing users valid credentials', () => {
+      it('responds 200: authorizes existing login credentials', () => {
+        return supertest(app).post('/api/auth/login').expect(200, johnDoe);
+      });
+    });
+
+    context('given invalid login credentials', () => {
+      it('responds 400: unable to sign in', () => {
+        const invalidUser = new MockUser();
+        invalidUser.username = 'doesntEvenGoHere22';
+        invalidUser.password = 'bigDummy92';
+        return supertest(app).post('apo/auth/login').expect(400, invalidUser);
+      });
     });
   });
 });

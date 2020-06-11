@@ -28,7 +28,7 @@ describe('trips endpoint', () => {
       });
   });
 
-  it('should respond 400 if no interests exist', () => {
+  it('should respond 400 if no tripss exist', () => {
     return supertest(app)
       .get('/:user_id')
       .expect(400, { error: 'could not find any trips' });
