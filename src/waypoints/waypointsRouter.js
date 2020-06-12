@@ -23,7 +23,7 @@ waypointsRouter.route('/').post(jsonBodyParser, async (req, res, next) => {
     if (!data || data.length < 1) {
       res.send(400, 'no route found');
     }
-    data = { ...data, query, readius }
+    data = { ...data, query, radius }
     waypointsService.getWaypoints(data).then((places) => {
       const filteredList = Array.from(
         new Set(places.points.map((a) => a.id))
