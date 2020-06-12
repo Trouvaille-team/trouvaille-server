@@ -30,17 +30,16 @@ const createAuth = (mockUser, secret = process.env.JWT_SECRET) => {
 
 const insertMockUser = (db) => {
   const mockUser = {
-    "id": 1,
+
     "username": "userrrr",
     "email": "emaillll",
     "password": bcrypt.hashSync('cl3v3rP@sswerd', 10)
   }
 
-  return db.transaction(async trx => {
-    await trx.into('users').insert(mockUser)
-    await trx.raw(`ALTER SEQUENCE trips_trip_id_seq RESTART WITH 1;`,)
-  })
-};
+console.log('i actually ran insertMockUser')
+
+  return db.into('users').insert(mockUser)
+  }
 
 const insertTrip = (db) => {
   let testTrip = [{
@@ -48,7 +47,7 @@ const insertTrip = (db) => {
     "destination": JSON.stringify("asjdf"),
     "waypoints": JSON.stringify("asdf"),
     "destination_name": JSON.stringify("asdf"),
-    "user_id": "1"
+    "user_id": 1
   }]
 
   return db.transaction(async trx => {
@@ -59,7 +58,7 @@ const insertTrip = (db) => {
 function cleanTrip(db) {
   return db.transaction(trx =>
     trx.raw(
-      `Truncate
+      `TRUNCATE
         "trips"`
     )
       .then(() =>
@@ -67,19 +66,20 @@ function cleanTrip(db) {
           trx.raw(`ALTER SEQUENCE trips_trip_id_seq minvalue 0 START WITH 1`),
           trx.raw(`SELECT setval('trips_trip_id_seq', 0)`)
         ]))
-  );
+  )
 }
+
 function cleanUsers(db) {
-  return db.transaction(trx =>
-    trx.raw(
-      `Delete from users`
+  return db.raw(
+      `TRUNCATE 
+      users restart identity CASCADE`
     )
-      .then(() =>
-        Promise.all([
-          trx.raw(`ALTER SEQUENCE users_id_seq minvalue 0 START WITH 1`),
-          trx.raw(`SELECT setval('users_id_seq', 0)`)
-        ]))
-  );
+      // .then(() =>
+      //   Promise.all([
+      //     trx.raw(`ALTER SEQUENCE users_id_seq minvalue 0 START WITH 1`),
+      //     trx.raw(`SELECT setval('users_id_seq', 0)`)
+      //   ])
+      // )
 }
 
 

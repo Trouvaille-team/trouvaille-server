@@ -5,29 +5,37 @@ const knex = require('knex');
 const supertest = require('supertest');
 const app = require('../src/app');
 const { TEST_DATABASE_URL } = require('../src/config');
-const { insertMockUser, insertTrip, testTrip, cleanTrip, cleanUsers } = require('./test-helpers');
+const { insertMockUser, insertTrip, testTrip, cleanTrip, cleanUsers, makeKnexInstance, cleanTables } = require('./test-helpers');
 
 describe('trips endpoint', function () {
   let db;
 
   before('make knex instance', () => {
-    db = knex({
-      client: 'pg',
-      connection: TEST_DATABASE_URL,
-    });
+    db = makeKnexInstance();
     app.set('db', db);
   });
-  after('disconnect from db', () => db.destroy());
 
   after('clear database', () => {
-    cleanTrip(db)
-    cleanUsers(db)
+    // cleanUsers(db);
+    // cleanTrip(db);
+  });
+
+  after('disconnect from db', () => db.destroy());
+
+  beforeEach('cleanup', () => {
+    // cleanTrip(db);
+    return cleanUsers(db);
   })
-  describe("some bullshit", () => {
-    beforeEach('insert shit', () => {
-      insertMockUser(db);
-      insertTrip(db)
-    })
+
+  beforeEach('insert ', () => {
+    return insertMockUser(db);
+  });
+
+  describe('while there is a data in the database', () => {
+    beforeEach('insert ', () => {
+      
+      insertTrip(db);
+    });
 
     it('should respond 200 with users trips', () => {
       return supertest(app)

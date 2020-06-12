@@ -23,7 +23,7 @@ describe('auth endpoints', () => {
 
   after('disconnect from test db', () => db.destroy());
 
-  describe('POST api/auth/login', () => {
+  describe('POST /api/auth/login', () => {
     const johnDoe = new MockUser();
     johnDoe.id = 42;
     johnDoe.username = 'JohnDoe92';
@@ -38,13 +38,13 @@ describe('auth endpoints', () => {
         return supertest(app).post('/api/auth/login').expect(200, johnDoe);
       });
     });
-
+    
     context('given invalid login credentials', () => {
       it('responds 400: unable to sign in', () => {
         const invalidUser = new MockUser();
         invalidUser.username = 'doesntEvenGoHere22';
         invalidUser.password = 'bigDummy92';
-        return supertest(app).post('apo/auth/login').expect(400, invalidUser);
+        return supertest(app).post('/api/auth/login').expect(400, invalidUser);
       });
     });
   });
