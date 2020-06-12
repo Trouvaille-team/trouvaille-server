@@ -1,6 +1,7 @@
 # Trouvaille Server
 
   * The server uses six endpoints:
+      
       */api/waypoints
       */api/waypoints/nearby
       */api/auth/login
