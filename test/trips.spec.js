@@ -7,7 +7,7 @@ const app = require('../src/app');
 const { TEST_DATABASE_URL } = require('../src/config');
 const { insertMockUser, insertTrip, testTrip, cleanTrip, cleanUsers } = require('./test-helpers');
 
-describe.only('trips endpoint', function () {
+describe('trips endpoint', function () {
   let db;
 
   before('make knex instance', () => {
