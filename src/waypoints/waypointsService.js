@@ -29,7 +29,7 @@ const waypointsService = {
     for (let i = 0; i < obj.points.length; i++) {
       console.log(i)
       const element = obj.points[i];
-      let url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${obj.query.join("+OR+")}&type=tourist_attraction&location=${element.lat},${element.lng}&radius=${obj.radius}&key=${config.API_KEY}`
+      let url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${obj.query.join("+OR+")}&type=tourist_attraction&location=${element.lat},${element.lng}&radius=${obj.radius ? obj.raius : 10000}&key=${config.API_KEY}`
 
       try {
         const response = await fetch(url);
