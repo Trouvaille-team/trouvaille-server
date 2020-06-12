@@ -34,7 +34,6 @@ const waypointsService = {
       try {
         const response = await fetch(url);
         const json = await response.json();
-        console.log(json)
         json.results.map((place) => {
           points.push({
             name: place.name, id: place.place_id, coords: place.geometry.location, photoInfo: place.photos
