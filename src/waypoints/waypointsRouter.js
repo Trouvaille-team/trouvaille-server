@@ -12,8 +12,9 @@ let dest = 'Los+Angeles';
 
 waypointsRouter.route('/').post(jsonBodyParser, async (req, res, next) => {
   let origin = req.body.origin;
-  let dest = req.body.dest;
-  let query = req.body.query;
+  let dest = req.body.dest
+  let query = req.body.query
+  let radius = req.body.radius
   if (!origin || !dest || !query) {
     res.send(404, 'missing required field');
   }
@@ -22,7 +23,7 @@ waypointsRouter.route('/').post(jsonBodyParser, async (req, res, next) => {
     if (!data || data.length < 1) {
       res.send(400, 'no route found');
     }
-    data = { ...data, query };
+    data = { ...data, query, readius }
     waypointsService.getWaypoints(data).then((places) => {
       const filteredList = Array.from(
         new Set(places.points.map((a) => a.id))
