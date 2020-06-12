@@ -2,6 +2,7 @@
 const tripsService = require('../src/trips/trips-service')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const knex = require('knex')
 
 class MockUser {
   constructor(username, email, password) {
@@ -10,6 +11,14 @@ class MockUser {
     this.password = password;
   }
 }
+
+function makeKnexInstance() {
+  return knex({
+    client: 'pg',
+    connection: process.env.TEST_DATABASE_URL,
+  });
+}
+
 
 const createAuth = (mockUser, secret = process.env.JWT_SECRET) => {
   const token = jwt.sign({ id: mockUser.id }, secret, {
