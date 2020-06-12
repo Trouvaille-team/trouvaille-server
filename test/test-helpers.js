@@ -88,5 +88,7 @@ module.exports = {
   createAuth,
   insertMockUser,
   insertTrip,
-  cleanTrip, cleanUsers
+  cleanTrip,
+  cleanUsers,
+  makeKnexInstance
 };

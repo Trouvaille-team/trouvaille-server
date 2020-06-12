@@ -51,7 +51,7 @@ usersRouter.post('/new', jsonBodyParser, async (req, res, next) => {
 
     res
       .status(201)
-      .location(path.posix.join(req.originalUrl, `/${user}`))
+      .location(path.posix.join('/login'))
       .json(usersService.sanitizeUser(user));
   } catch (error) {
     next(error);
