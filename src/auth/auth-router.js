@@ -12,7 +12,7 @@ authRouter.route('/login').post(jsonBodyParser, async (req, res, next) => {
   const reqUser = { username, password, email };
   for (const [key, value] of Object.entries(reqUser))
     if (value === null) {
-      return res.status(405).json({
+      return res.status(400).json({
         error: `${key} missing in request body`,
       });
     }
@@ -23,7 +23,7 @@ authRouter.route('/login').post(jsonBodyParser, async (req, res, next) => {
     );
 
     if (!userInDb)
-      return res.status(401).json({
+      return res.status(400).json({
         error: 'incorrect username and/or password',
       });
 
@@ -34,7 +34,7 @@ authRouter.route('/login').post(jsonBodyParser, async (req, res, next) => {
       
 
     if (!checkMatch)
-      return res.status(407).json({
+      return res.status(400).json({
         error: 'incorrect username and/or password',
       });
 
