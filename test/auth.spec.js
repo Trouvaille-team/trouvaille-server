@@ -2,40 +2,45 @@
 
 const knex = require('knex');
 const supertest = require('supertest');
-const { expect } = require('chai');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt')
 
 const app = require('../src/app');
-const { MockUser, createAuth, insertMockUser } = require('./test-helpers');
+const { MockUser, createAuth, insertMockUser, makeKnexInstance, cleanUsers } = require('./test-helpers');
 
 describe('auth endpoints', () => {
   let db;
 
   before('make knex instance', () => {
-    let db;
-
-    db = knex({
-      client: 'pg',
-      connection: process.env.TEST_DB_URL,
-    });
+    db = makeKnexInstance();
     app.set('db', db);
   });
 
   after('disconnect from test db', () => db.destroy());
 
+  beforeEach('cleanup', () => cleanUsers(db));
+
   describe('POST /api/auth/login', () => {
-    const johnDoe = new MockUser();
-    johnDoe.id = 42;
-    johnDoe.username = 'JohnDoe92';
-    johnDoe.email = 'JohnDoe92@gmail.com';
-    johnDoe.password = 'sumCL3v3rP@ssword';
+
     beforeEach('insert mock user', () => {
-      insertMockUser(db, johnDoe);
-    });
+      return insertMockUser(db);
+    })
+
+    
 
     context('given an existing users valid credentials', () => {
-      it('responds 200: authorizes existing login credentials', () => {
-        return supertest(app).post('/api/auth/login').expect(200, johnDoe);
+    
+      const mockUser = {
+        "username": "userrrr",
+        "email": "emaillll",
+        "password": "cl3v3rP@sswerd"
+      }
+
+      it.only('responds 200: authorizes existing login credentials', () => {
+        return supertest(app)
+          .post('/api/auth/login')
+          .send(mockUser)
+          .expect(200);
       });
     });
     

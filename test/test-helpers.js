@@ -19,7 +19,6 @@ function makeKnexInstance() {
   });
 }
 
-
 const createAuth = (mockUser, secret = process.env.JWT_SECRET) => {
   const token = jwt.sign({ id: mockUser.id }, secret, {
     subject: mockUser.username,
@@ -30,13 +29,10 @@ const createAuth = (mockUser, secret = process.env.JWT_SECRET) => {
 
 const insertMockUser = (db) => {
   const mockUser = {
-
     "username": "userrrr",
     "email": "emaillll",
     "password": bcrypt.hashSync('cl3v3rP@sswerd', 10)
   }
-
-console.log('i actually ran insertMockUser')
 
   return db.into('users').insert(mockUser)
   }

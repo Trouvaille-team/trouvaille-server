@@ -10,11 +10,9 @@ const jsonBodyParser = express.json();
 authRouter.route('/login').post(jsonBodyParser, async (req, res, next) => {
   const { username, password, email } = req.body;
   const reqUser = { username, password, email };
-
   for (const [key, value] of Object.entries(reqUser))
     if (value === null) {
-      console.log(key, value);
-      return res.status(400).json({
+      return res.status(405).json({
         error: `${key} missing in request body`,
       });
     }
@@ -23,8 +21,9 @@ authRouter.route('/login').post(jsonBodyParser, async (req, res, next) => {
       req.app.get('db'),
       reqUser.username
     );
+
     if (!userInDb)
-      return res.status(400).json({
+      return res.status(401).json({
         error: 'incorrect username and/or password',
       });
 
@@ -32,8 +31,10 @@ authRouter.route('/login').post(jsonBodyParser, async (req, res, next) => {
       reqUser.password,
       userInDb.password
     );
+      
+
     if (!checkMatch)
-      return res.status(400).json({
+      return res.status(407).json({
         error: 'incorrect username and/or password',
       });
 
