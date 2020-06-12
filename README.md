@@ -2,12 +2,12 @@
 
   * The server uses six endpoints:
       
-      */api/waypoints
-      */api/waypoints/nearby
-      */api/auth/login
-      */api/users/new
-      */api/trips/
-      */api/trips/:user_id
+      * /api/waypoints
+      * /api/waypoints/nearby
+      * /api/auth/login
+      * /api/users/new
+      * /api/trips/
+      * /api/trips/:user_id
 
   * The base url for the server is: https://trouvaille-app.herokuapp.com
 
