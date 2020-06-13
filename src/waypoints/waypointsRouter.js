@@ -58,14 +58,14 @@ waypointsRouter
   });
 
 waypointsRouter.route('/photo').post(jsonBodyParser, async (req, res, next) => {
-  console.log(req.body.photo_reference);
+
   let url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${req.body.photo_reference}&key=${config.API_KEY}`;
 
   try {
     const response = await fetch(url);
     res.send(200, JSON.stringify(response.url));
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 });
 module.exports = waypointsRouter;

@@ -20,7 +20,7 @@ const waypointsService = {
       });
       return { points, endCoords }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
   async getWaypoints(obj) {
@@ -39,7 +39,7 @@ const waypointsService = {
           })
         })
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
     return { points, endCoords }

@@ -9,7 +9,6 @@ const jsonBodyParser = express.json();
 tripsRouter.route('/:user_id').get(async (req, res, next) => {
   try {
     const id = req.params.user_id;
-    console.log("id is", id)
     return await tripsService
       .getUserTrips(req.app.get('db'), id)
       .then((data) => {

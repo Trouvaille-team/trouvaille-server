@@ -8,7 +8,6 @@ const tripsService = {
         .select('*')
         .where('user_id', userId)
     ).then((res) => {
-      console.log("res", res)
       return this.deserialize(res)
     })
   },
