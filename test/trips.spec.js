@@ -1,11 +1,7 @@
-'use strict';
-
 const { expect } = require('chai');
-const knex = require('knex');
 const supertest = require('supertest');
 const app = require('../src/app');
-const { TEST_DATABASE_URL } = require('../src/config');
-const { insertMockUser, insertTrip, testTrip, cleanTrip, cleanUsers, makeKnexInstance, cleanTables } = require('./test-helpers');
+const { insertMockUser, insertTrip, cleanUsers, makeKnexInstance } = require('./test-helpers');
 
 describe('trips endpoint', function () {
   let db;
@@ -25,7 +21,7 @@ describe('trips endpoint', function () {
   beforeEach('cleanup', () => {
     // cleanTrip(db);
     return cleanUsers(db);
-  })
+  });
 
   beforeEach('insert ', () => {
     return insertMockUser(db);
@@ -33,8 +29,7 @@ describe('trips endpoint', function () {
 
   describe('while there is a data in the database', () => {
     beforeEach('insert ', () => {
-      
-      insertTrip(db);
+      return insertTrip(db);
     });
 
     it('should respond 200 with users trips', () => {
@@ -44,7 +39,7 @@ describe('trips endpoint', function () {
         .expect((res) => {
           expect(res.body).to.exist;
         });
-    })
-  })
+    });
+  });
 
 });

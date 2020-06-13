@@ -1,8 +1,6 @@
-'use strict';
-const tripsService = require('../src/trips/trips-service')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const knex = require('knex')
+const knex = require('knex');
 
 class MockUser {
   constructor(username, email, password) {
@@ -29,26 +27,24 @@ const createAuth = (mockUser, secret = process.env.JWT_SECRET) => {
 
 const insertMockUser = (db) => {
   const mockUser = {
-    "username": "userrrr",
-    "email": "emaillll",
-    "password": bcrypt.hashSync('cl3v3rP@sswerd', 10)
-  }
+    'username': 'userrrr',
+    'email': 'emaillll',
+    'password': bcrypt.hashSync('cl3v3rP@sswerd', 10)
+  };
 
-  return db.into('users').insert(mockUser)
-  }
+  return db.into('users').insert(mockUser);
+};
 
 const insertTrip = (db) => {
   let testTrip = [{
-    "origin": JSON.stringify("blah"),
-    "destination": JSON.stringify("asjdf"),
-    "waypoints": JSON.stringify("asdf"),
-    "destination_name": JSON.stringify("asdf"),
-    "user_id": 1
-  }]
+    'origin': JSON.stringify('blah'),
+    'destination': JSON.stringify('asjdf'),
+    'waypoints': JSON.stringify('asdf'),
+    'destination_name': JSON.stringify('asdf'),
+    'user_id': 1
+  }];
 
-  return db.transaction(async trx => {
-    await trx.into('trips').insert(testTrip)
-  })
+  return db.into('trips').insert(testTrip);
 };
 
 function cleanTrip(db) {
@@ -59,23 +55,17 @@ function cleanTrip(db) {
     )
       .then(() =>
         Promise.all([
-          trx.raw(`ALTER SEQUENCE trips_trip_id_seq minvalue 0 START WITH 1`),
-          trx.raw(`SELECT setval('trips_trip_id_seq', 0)`)
+          trx.raw('ALTER SEQUENCE trips_trip_id_seq minvalue 0 START WITH 1'),
+          trx.raw('SELECT setval(\'trips_trip_id_seq\', 0)')
         ]))
-  )
+  );
 }
 
 function cleanUsers(db) {
   return db.raw(
-      `TRUNCATE 
+    `TRUNCATE 
       users restart identity CASCADE`
-    )
-      // .then(() =>
-      //   Promise.all([
-      //     trx.raw(`ALTER SEQUENCE users_id_seq minvalue 0 START WITH 1`),
-      //     trx.raw(`SELECT setval('users_id_seq', 0)`)
-      //   ])
-      // )
+  );
 }
 
 
