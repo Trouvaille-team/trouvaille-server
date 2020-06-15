@@ -11,15 +11,9 @@ describe('trips endpoint', function () {
     app.set('db', db);
   });
 
-  after('clear database', () => {
-    // cleanUsers(db);
-    // cleanTrip(db);
-  });
-
   after('disconnect from db', () => db.destroy());
 
   beforeEach('cleanup', () => {
-    // cleanTrip(db);
     return cleanUsers(db);
   });
 

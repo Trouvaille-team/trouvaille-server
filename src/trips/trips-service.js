@@ -1,5 +1,3 @@
-'use strict';
-
 const tripsService = {
   getUserTrips(db, userId) {
     return (

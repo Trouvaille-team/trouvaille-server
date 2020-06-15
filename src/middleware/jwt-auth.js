@@ -1,5 +1,3 @@
-/* eslint-disable strict */
-
 const { jsonWebTokenError } = require('jsonwebtoken');
 const authService = require('../auth/auth-service');
 

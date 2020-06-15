@@ -1,9 +1,6 @@
 /* eslint-disable strict */
 const express = require('express');
-
 const authService = require('./auth-service');
-const { requireAuth } = require('../middleware/jwt-auth');
-
 const authRouter = express.Router();
 const jsonBodyParser = express.json();
 

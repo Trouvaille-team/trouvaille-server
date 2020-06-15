@@ -1,9 +1,5 @@
-'use strict';
-
 const bcrypt = require('bcrypt');
 const xss = require('xss');
-
-
 
 const usersService = {
   checkUsers(db, username) {
@@ -36,7 +32,7 @@ const usersService = {
     return null;
   },
   hashPassword(password) {
-    return bcrypt.hash(password, 12)
+    return bcrypt.hash(password, 12);
   },
   sanitizeUser(user) {
     return {
@@ -44,12 +40,6 @@ const usersService = {
       email: xss(user.email)
     };
   }
-//   validateEmail(email) {
-//       const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-//       if(email.length <= 10) {
-//           return 'password must be at least 10'
-//       }
-//   }
 };
 
 module.exports = usersService;

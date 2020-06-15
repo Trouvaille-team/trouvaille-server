@@ -18,11 +18,13 @@ waypointsRouter.route('/').post(jsonBodyParser, async (req, res, next) => {
   if (!origin || !dest || !query) {
     res.send(404, 'missing required field');
   }
+
   const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${dest}&key=${config.API_KEY}`;
   waypointsService.getPoints(url, origin).then((data) => {
     if (!data || data.length < 1) {
       res.send(400, 'no route found');
     }
+
     data = { ...data, query, radius }
     waypointsService.getWaypoints(data).then((places) => {
       const filteredList = Array.from(
@@ -35,6 +37,7 @@ waypointsRouter.route('/').post(jsonBodyParser, async (req, res, next) => {
     });
   });
 });
+
 waypointsRouter
   .route('/nearby')
   .post(jsonBodyParser, async (req, res, next) => {
@@ -68,4 +71,5 @@ waypointsRouter.route('/photo').post(jsonBodyParser, async (req, res, next) => {
     console.error(error);
   }
 });
+
 module.exports = waypointsRouter;

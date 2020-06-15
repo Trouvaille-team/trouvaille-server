@@ -19,18 +19,12 @@ usersRouter.post('/new', jsonBodyParser, async (req, res, next) => {
   try {
     const passwordError = usersService.validatePassword(password);
 
-
     if (passwordError) return res.status(400).json({ error: passwordError });
 
     const hasUserWithUserName = await usersService.checkUsers(
       req.app.get('db'),
       username
     );
-
-    //   const emailError = await usersService.validateEmail(email);
-
-    //   if(emailError)
-    //     return res.status(400).json(emailError);
 
     if (hasUserWithUserName)
       return res
@@ -44,8 +38,6 @@ usersRouter.post('/new', jsonBodyParser, async (req, res, next) => {
       password: hashedPassword,
       email,
     };
-
-    //   const hasUserWithEmail = await usersService.validateEmail(email);
 
     const user = await usersService.insertUser(req.app.get('db'), newUser);
 
