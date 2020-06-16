@@ -28,7 +28,6 @@ authRouter.route('/login').post(jsonBodyParser, async (req, res, next) => {
       reqUser.password,
       userInDb.password
     );
-      
 
     if (!checkMatch)
       return res.status(400).json({
@@ -41,11 +40,15 @@ authRouter.route('/login').post(jsonBodyParser, async (req, res, next) => {
     };
     res.send({
       authToken: authService.createJwt(subject, payload),
-      user_id: userInDb.id
+      user_id: userInDb.id,
     });
   } catch (error) {
     next(error);
   }
+});
+
+authRouter.route('reset').post(jsonBodyParser, async (req, res, next) => {
+  const { username, email } = req.body;
 });
 
 module.exports = authRouter;
