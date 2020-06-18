@@ -13,8 +13,8 @@ tripsRouter.route('/:user_id').get(async (req, res, next) => {
       .getUserTrips(req.app.get('db'), id)
       .then((data) => {
         if (data.length === 0) {
-          res.status(400).json({
-            error: 'cannot find any existing trips',
+          res.status(204).json({
+            message: 'Cannot find any existing trips.',
           });
         }
         else { res.send(200, data) };
