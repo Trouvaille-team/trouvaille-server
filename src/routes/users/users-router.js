@@ -8,7 +8,7 @@ const usersRouter = express.Router();
 const jsonBodyParser = express.json();
 
 usersRouter.post('/new', jsonBodyParser, async (req, res, next) => {
-  const { password, username, email } = req.body;
+  const { password, username, email, isVerified } = req.body;
 
   for (const field of ['username', 'email', 'password'])
     if (!req.body[field])

@@ -9,9 +9,9 @@ const { NODE_ENV } = require('./config');
 const errorHandler = require('./middleware/error-handler');
 
 const authRouter = require('./auth/auth-router');
-const usersRouter = require('./users/users-router');
-const waypointsRouter = require('./waypoints/waypointsRouter');
-const tripsRouter = require('./trips/trips-router');
+const usersRouter = require('./routes/users/users-router');
+const waypointsRouter = require('./routes/waypoints/waypointsRouter');
+const tripsRouter = require('./routes/trips/trips-router');
 
 const app = express();
 app.use(

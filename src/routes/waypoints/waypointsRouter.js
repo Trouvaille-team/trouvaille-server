@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const jsonBodyParser = express.json();
 const waypointsService = require('./waypointsService');
-const config = require('../config.js');
+const config = require('../../config.js');
 const waypointsRouter = express.Router();
 const fetch = require('node-fetch');
 
@@ -12,9 +12,9 @@ let dest = 'Los+Angeles';
 
 waypointsRouter.route('/').post(jsonBodyParser, async (req, res, next) => {
   let origin = req.body.origin;
-  let dest = req.body.dest
-  let query = req.body.query
-  let radius = req.body.radius
+  let dest = req.body.dest;
+  let query = req.body.query;
+  let radius = req.body.radius;
   if (!origin || !dest || !query) {
     res.send(404, 'missing required field');
   }
@@ -25,7 +25,7 @@ waypointsRouter.route('/').post(jsonBodyParser, async (req, res, next) => {
       res.send(400, 'no route found');
     }
 
-    data = { ...data, query, radius }
+    data = { ...data, query, radius };
     waypointsService.getWaypoints(data).then((places) => {
       const filteredList = Array.from(
         new Set(places.points.map((a) => a.id))

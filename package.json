@@ -4,6 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "interests": "psql -U postgres -d trouvaille -f ./seed/seed.interests.sql",
+    "trips": "psql -U postgres -d trouvaille -f ./seed/seed.trips.sql",
+    "users": "psql -U postgres -d trouvaille -f ./seed/seed.users.sql",
     "test": "mocha --require test/setup.js",
     "dev": "nodemon src/server.js",
     "migrate": "postgrator --config postgrator-config.js",
@@ -32,6 +35,7 @@
     "node-fetch": "^2.6.0",
     "nodemailer": "^6.4.8",
     "nodemailer-express-handlebars": "^4.0.0",
+    "nodemailer-sendgrid": "^1.0.3",
     "pg": "^7.8.2",
     "polyline": "^0.2.0",
     "postgrator": "^4.0.0",
